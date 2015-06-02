@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body onload="initialize()">
+        <div class="navbar navbar-fixed-top navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a href="index.html" class="navbar-brand">注音碰碰碰</a>
+                    </div>
+                    <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><p class="navbar-text"></p></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="signinModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4>登入</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <!--<div class="form-group has-success has-feedback">-->
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="studentID" placeholder="姓名">
+                                <!--<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>-->
+                            </div>
+                            <div class="alert alert-danger" style="display: none">
+                                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                <span class="alert-msg"></span>
+                            </div>
+                            <div class="checkbox">
+                                <label for="remember"><input type="checkbox" value="remember" checked>記住我</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" data-dismiss="modal">算了</button>
+                        <button class="btn btn-primary" type="button" onclick="signin(this)">好了</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="howtoModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4>怎麼玩</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <strong>選擇<br>開始玩：進入遊戲<br>我是誰：登入</strong>
+                            <img class="img-responsive" src="img/index.jpg" alt="">
+                        </div>
+                        <div>
+                            <strong>選擇<br>同聲：相同聲符的字可以相連<br>同韻：相同韻腳的字可以相連</strong>
+                            <img class="img-responsive" src="img/choose.jpg" alt="">
+                        </div>
+                        <div>
+                            <strong>輸入姓名登入，"記住我"可避免需重複登入</strong>
+                            <img class="img-responsive" src="img/singnin.jpg" alt="">
+                        </div>
+                        <div>
+                            <strong>遊戲過程<br>規則如經典遊戲：四川省，僅可由三條以內直線進行連接<br>選中字時，可以透過"查萌典"查詢該字</strong>
+                            <img class="img-responsive" src="img/progress.jpg" alt="">
+                        </div>
+                        <div>
+                            <strong>查詢結果</strong>
+                            <img class="img-responsive" src="img/search.jpg" alt="">
+                        </div>
+                        <div>
+                            <strong>時間內完成遊戲即可進入下一關，時限會遞減</strong>
+                            <img class="img-responsive" src="img/levelup.jpg" alt="">
+                        </div>
+                        <div>
+                            <strong>超過時間或選擇不玩了，顯示排行榜</strong>
+                            <img class="img-responsive" src="img/score.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" data-dismiss="modal">知道了</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="overModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4>遊戲結束</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="scoreTable" class="table table-hover">
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" onclick="location.reload()">好</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4></h4>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" data-dismiss="modal">知道了</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="chooseModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4>玩什麼</h4>
+                    </div>
+                    <div class="modal-body">
+                        <button class="btn-lg btn-success" type="button" data-dismiss="modal" onclick="startPlaying(0)">同聲</button>
+                        <button class="btn-lg btn-primary" type="button" data-dismiss="modal" onclick="startPlaying(1)">同韻</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" data-dismiss="modal">算了</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="continueModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4>下一關</h4>
+                    </div>
+                    <div class="modal-body">
+                        <button class="btn-lg btn-success" type="button" data-dismiss="modal" onclick="startPlaying(0)">同聲</button>
+                        <button class="btn-lg btn-primary" type="button" data-dismiss="modal" onclick="startPlaying(1)">同韻</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" data-dismiss="modal" onclick="gameOver()">不玩了</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id="mainContainer">
+            <div id="buttonBlock">
+                <button class="btn-lg btn-success" type="button" data-toggle="modal" data-target="#chooseModal">開始玩</button>
+                <button class="btn-lg btn-primary" type="button" data-toggle="modal" data-target="#howtoModal">怎麼玩</button>
+            </div>
+            <table id="gameTable"></table>
+        </div>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="js/script.js"></script>
+    </body>
+</html>
