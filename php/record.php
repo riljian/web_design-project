@@ -15,7 +15,7 @@ mysql_set_charset("utf8", $link);
 $sql = "INSERT INTO student (name, score) VALUES ('$name', $score) ON DUPLICATE KEY UPDATE score=$score";
 mysql_query($sql, $link);
 
-$sql = "SELECT * FROM student ORDER BY student.score DESC LIMIT 0, 20";
+$sql = "SELECT name, score FROM student ORDER BY student.score DESC LIMIT 0, 20";
 $dataFetch = mysql_query($sql, $link);
 
 echo "<tr><th>#</th><th>姓名</th><th>分數</th></tr>";
