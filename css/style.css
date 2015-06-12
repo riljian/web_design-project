@@ -52,3 +52,8 @@ div#buttonBlock {
 #howtoModal .modal-body {
     text-align: left;
 }
+
+div.scroll {
+	height: 300px;
+	overflow: scroll;
+}
